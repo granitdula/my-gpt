@@ -16,6 +16,105 @@ import SendIcon from "@mui/icons-material/Send";
 const appBarColor = blueGrey[900];
 const textBubbleColor = blueGrey[600];
 
+const chat = [
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: false,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+  {
+    isUser: true,
+    text: `Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.Created a big piece of text to fill this up to see how it
+           looks.`,
+  },
+];
+
 export function ChatView() {
   return (
     <>
@@ -25,45 +124,35 @@ export function ChatView() {
             My GPT
           </Typography>
         </AppBar>
-        <Grid2 container rowSpacing={1} marginTop={"1rem"}>
-          <Grid2 container size={12}>
-            <Grid2 size={1}>
-              <AccountCircleIcon fontSize="large" />
+        <Grid2
+          container
+          rowSpacing={1}
+          marginTop={"1rem"}
+          sx={{ maxHeight: "45rem", overflow: "scroll" }}
+        >
+          {chat.map((chatRow, index) => (
+            <Grid2 container size={12} key={index}>
+              <Grid2 size={0.5}>
+                {chatRow.isUser ? (
+                  <AccountCircleIcon fontSize="large" />
+                ) : (
+                  <SmartToyIcon fontSize="large" />
+                )}
+              </Grid2>
+              <Grid2 size={11}>
+                <Paper
+                  elevation={6}
+                  sx={{
+                    backgroundColor: textBubbleColor,
+                    color: "white",
+                    padding: "0.5rem",
+                  }}
+                >
+                  {chatRow.text}
+                </Paper>
+              </Grid2>
             </Grid2>
-            <Grid2 size={10.5}>
-              <Paper
-                elevation={6}
-                sx={{
-                  backgroundColor: textBubbleColor,
-                  color: "white",
-                  padding: "0.5rem",
-                }}
-              >
-                Created a big piece of text to fill this up to see how it
-                looks.Created a big piece of text to fill this up to see how it
-                looks.Created a big piece of text to fill this up to see how it
-                looks.Created a big piece of text to fill this up to see how it
-                looks.
-              </Paper>
-            </Grid2>
-          </Grid2>
-          <Grid2 container size={12}>
-            <Grid2 size={1}>
-              <SmartToyIcon fontSize="large" />
-            </Grid2>
-            <Grid2 size={10.5}>
-              <Paper
-                elevation={6}
-                sx={{ backgroundColor: textBubbleColor, color: "white" }}
-              >
-                Created a big piece of text to fill this up to see how it
-                looks.Created a big piece of text to fill this up to see how it
-                looks.Created a big piece of text to fill this up to see how it
-                looks.Created a big piece of text to fill this up to see how it
-                looks.
-              </Paper>
-            </Grid2>
-          </Grid2>
+          ))}
         </Grid2>
         <TextField
           id="outlined-basic"
