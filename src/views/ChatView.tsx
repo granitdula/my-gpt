@@ -12,110 +12,46 @@ import { blueGrey } from "@mui/material/colors";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SendIcon from "@mui/icons-material/Send";
+import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 
 const appBarColor = blueGrey[900];
 const textBubbleColor = blueGrey[600];
 
-const chat = [
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: false,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-  {
-    isUser: true,
-    text: `Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.Created a big piece of text to fill this up to see how it
-           looks.`,
-  },
-];
+interface Chat {
+  isUser: boolean;
+  text: string;
+}
 
 export function ChatView() {
+  const [chat, setChat] = useState<Chat[]>([]);
+  const [textInput, setTextInput] = useState("");
+
+  const onSend = () => {
+    if (textInput.length !== 0) {
+      setChat([
+        ...chat,
+        {
+          isUser: true,
+          text: textInput,
+        },
+        {
+          isUser: false,
+          text: "AI bot hardcoded text.",
+        },
+      ]);
+    }
+  };
+
+  const onTextChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTextInput(event.target.value);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      onSend();
+    }
+  };
+
   return (
     <>
       <Container maxWidth={false} disableGutters={true}>
@@ -157,11 +93,14 @@ export function ChatView() {
         <TextField
           id="outlined-basic"
           label="Type here"
+          value={textInput}
+          onChange={onTextChange}
+          onKeyDown={handleKeyDown}
           slotProps={{
             input: {
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton>
+                  <IconButton onClick={onSend}>
                     <SendIcon />
                   </IconButton>
                 </InputAdornment>
