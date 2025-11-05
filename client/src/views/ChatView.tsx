@@ -13,6 +13,7 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SendIcon from "@mui/icons-material/Send";
 import { useState, type ChangeEvent, type KeyboardEvent } from "react";
+import axios from "axios";
 
 const appBarColor = blueGrey[900];
 const textBubbleColor = blueGrey[600];
@@ -26,7 +27,7 @@ export function ChatView() {
   const [chat, setChat] = useState<Chat[]>([]);
   const [textInput, setTextInput] = useState("");
 
-  const onSend = () => {
+  const onSend = async () => {
     if (textInput.length !== 0) {
       setChat([
         ...chat,
@@ -34,11 +35,27 @@ export function ChatView() {
           isUser: true,
           text: textInput,
         },
-        {
-          isUser: false,
-          text: "AI bot hardcoded text.",
-        },
       ]);
+
+      try {
+        const res = await axios.post("http://localhost:3000/llm/prompt", {
+          data: {
+            prompt: textInput,
+          },
+        });
+
+        setChat((prevChat) => [
+          ...prevChat,
+          {
+            isUser: false,
+            text: res.data.data.answer,
+          },
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
+
+      setTextInput("");
     }
   };
 
