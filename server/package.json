@@ -15,7 +15,12 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@huggingface/inference": "4",
+    "@langchain/community": "^1.0.0",
+    "@langchain/core": "^1.0.2",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "langchain": "^1.0.2"
   }
 }
