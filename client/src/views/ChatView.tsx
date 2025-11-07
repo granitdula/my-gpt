@@ -40,35 +40,40 @@ export function ChatView() {
       ]);
 
       try {
-        setChat((prevChat) => [
-          ...prevChat,
-          {
-            isUser: false,
-            text: "",
-            loading: true,
-          },
-        ]);
-        const res = await axios.post("http://localhost:3000/llm/prompt", {
-          data: {
-            prompt: textInput,
-          },
-        });
-
-        setChat((prevChat) => prevChat.filter((item) => item.loading !== true));
-
-        setChat((prevChat) => [
-          ...prevChat,
-          {
-            isUser: false,
-            text: res.data.data.answer,
-          },
-        ]);
+        await onAiRespond();
       } catch (error) {
         console.log(error);
       }
 
       setTextInput("");
     }
+  };
+
+  const onAiRespond = async () => {
+    setChat((prevChat) => [
+      ...prevChat,
+      {
+        isUser: false,
+        text: "",
+        loading: true,
+      },
+    ]);
+
+    const res = await axios.post("http://localhost:3000/llm/prompt", {
+      data: {
+        prompt: textInput,
+      },
+    });
+
+    setChat((prevChat) => prevChat.filter((item) => item.loading !== true));
+
+    setChat((prevChat) => [
+      ...prevChat,
+      {
+        isUser: false,
+        text: res.data.data.answer,
+      },
+    ]);
   };
 
   const onTextChange = (event: ChangeEvent<HTMLInputElement>) => {
