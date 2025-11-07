@@ -1,5 +1,6 @@
 import {
   AppBar,
+  CircularProgress,
   Container,
   Grid2,
   IconButton,
@@ -21,6 +22,7 @@ const textBubbleColor = blueGrey[600];
 interface Chat {
   isUser: boolean;
   text: string;
+  loading?: boolean;
 }
 
 export function ChatView() {
@@ -38,11 +40,21 @@ export function ChatView() {
       ]);
 
       try {
+        setChat((prevChat) => [
+          ...prevChat,
+          {
+            isUser: false,
+            text: "",
+            loading: true,
+          },
+        ]);
         const res = await axios.post("http://localhost:3000/llm/prompt", {
           data: {
             prompt: textInput,
           },
         });
+
+        setChat((prevChat) => prevChat.filter((item) => item.loading !== true));
 
         setChat((prevChat) => [
           ...prevChat,
@@ -93,16 +105,20 @@ export function ChatView() {
                 )}
               </Grid2>
               <Grid2 size={11}>
-                <Paper
-                  elevation={6}
-                  sx={{
-                    backgroundColor: textBubbleColor,
-                    color: "white",
-                    padding: "0.5rem",
-                  }}
-                >
-                  {chatRow.text}
-                </Paper>
+                {chatRow.loading ? (
+                  <CircularProgress color="inherit" />
+                ) : (
+                  <Paper
+                    elevation={6}
+                    sx={{
+                      backgroundColor: textBubbleColor,
+                      color: "white",
+                      padding: "0.5rem",
+                    }}
+                  >
+                    {chatRow.text}
+                  </Paper>
+                )}
               </Grid2>
             </Grid2>
           ))}
